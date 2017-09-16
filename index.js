@@ -24,7 +24,8 @@ var path = require('path'),
     _ = require('lodash'),
     url = require("url"),
     path = require("path");
-
+var Hipchatter = require('hipchatter');
+var hipchatter = new Hipchatter("GCS5CM4uz5UPRBR1l6PdFiLJGdaI61knla2n8xzC" , "https://api.hipchat.com/v2/");
 
 // Run Server
 var server = server.listen( options.port, function(){
@@ -67,7 +68,14 @@ app.post('/build', jsonParser, function (req, res) {
         });
     }
 
-    
+    hipchatter.notify('VMA', 
+     {
+        message: 'Build Success',
+        color: 'green',
+        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+        }, function(err){
+                if (err == null) console.log('Successfully notified the room.');
+    });
     // 2. Grab binary URL from Unity Cloud API
     getBuildDetails( buildAPIURL );
 });
