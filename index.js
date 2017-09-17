@@ -71,18 +71,19 @@ app.post('/build', jsonParser, function (req, res) {
     var buildTargetName = req.body.buildTargetName;
     var buildNumber = req.body.buildNumber;
     var dashboardURL = req.body.links.dashboard_url.href;
+    var summeryURL = req.body.links.dashboard_summary.href;
     var buildStatus = req.body.buildStatus;
    
-   noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboardURL, buildStatus);
+   noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboardURL, buildStatus, summeryURL);
     // 2. Grab binary URL from Unity Cloud API
     getBuildDetails( buildAPIURL );
 });
 
-function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard_url, buildStatus){
-    if(req.body.buildStatus == 'success'){
+function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard_url, buildStatus,summeryURL){
+    if(buildStatus == 'success'){
         hipchatter.notify('VMA', 
         {
-        message: 'Build Success with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ']. Check this for detail : ' + req.body.links.dashboard_url.href + req.body.links.dashboard_summary.href,
+        message: 'Build Success with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
         color: 'green',
         message_format:'text',
         token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
@@ -92,7 +93,7 @@ function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard
     }else{
         hipchatter.notify('VMA', 
         {
-        message: 'Build FAILED with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ']. Check this for detail : ' + req.body.links.dashboard_url.href + req.body.links.dashboard_summary.href,
+        message: 'Build FAILED with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
         color: 'red',
         message_format:'text',
         token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
