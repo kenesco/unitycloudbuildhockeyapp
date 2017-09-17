@@ -162,12 +162,17 @@ function getBuildDetails( buildAPIURL ){
             // console.log( data.links.download_primary.href );
 
             var parsed = url.parse( data.links.download_primary.href );
-            var filename = path.basename( parsed.pathname );
 
-            console.log("1. getBuildDetails: finished");
+            if(parsed){
+                var filename = path.basename( parsed.pathname );
+                
+                            console.log("1. getBuildDetails: finished");
+                
+                            // 3. Download binary.
+                            downloadBinary( data.links.download_primary.href, filename );
+            }
 
-            // 3. Download binary.
-            downloadBinary( data.links.download_primary.href, filename );
+            
 
         },
         error: function(error){
