@@ -67,6 +67,18 @@ app.post('/build', jsonParser, function (req, res) {
             message: "Process begun for project '" + req.body.projectName + "' platform '" + req.body.buildTargetName + "'."
         });
     }
+    var buildProjectName = req.body.projectName;
+    var buildTargetName = req.body.buildTargetName;
+    var buildNumber = req.body.buildNumber;
+    var dashboardURL = req.body.links.dashboard_url.href;
+    var buildStatus = req.body.buildStatus;
+   
+   noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboardURL, buildStatus);
+    // 2. Grab binary URL from Unity Cloud API
+    getBuildDetails( buildAPIURL );
+});
+
+function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard_url, buildStatus){
     if(req.body.buildStatus == 'success'){
         hipchatter.notify('VMA', 
         {
@@ -88,10 +100,7 @@ app.post('/build', jsonParser, function (req, res) {
                 if (err == null) console.log('Successfully notified the room.');
     });
     }
-   
-    // 2. Grab binary URL from Unity Cloud API
-    getBuildDetails( buildAPIURL );
-});
+}
 
 function getBuildDetails( buildAPIURL ){
     console.log("1. getBuildDetails: start");
