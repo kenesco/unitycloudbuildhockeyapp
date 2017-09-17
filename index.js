@@ -70,7 +70,7 @@ app.post('/build', jsonParser, function (req, res) {
     if(req.body.buildStatus == 'success'){
         hipchatter.notify('VMA', 
         {
-        message: 'Build Success with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ' ]. Check this for detail : ' + req.body.links.api_self.href,
+        message: 'Build Success with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ' ]. Check this for detail : ' + req.body.links.dashboard_url.href + req.body.links.dashboard_summary.href,
         color: 'green',
         token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
         }, function(err){
@@ -79,7 +79,7 @@ app.post('/build', jsonParser, function (req, res) {
     }else{
         hipchatter.notify('VMA', 
         {
-        message: 'Build Failed with [' + req.body.buildTargetName + ' ] on build number [' + req.body.buildNumber + ' ]',
+        message: 'Build FAILED with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ' ]. Check this for detail : ' + req.body.links.dashboard_url.href + req.body.links.dashboard_summary.href,
         color: 'red',
         token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
         }, function(err){
