@@ -80,8 +80,42 @@ app.post('/build', jsonParser, function (req, res) {
 });
 
 function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard_url, buildStatus,summeryURL){
+    if(buildProjectName == "VMA")
+        buildProjectName = "VMA";
+
+    if(buildProjectName == "eTron")
+        buildProjectName = "eTron-Client";
+
+    if(buildNumber == "Frresh")
+        buildProjectName = "Frresh";
+
+    
+    if(buildStatus == 'Queued'){
+        hipchatter.notify(buildProjectName, 
+        {
+        message: 'Build Queued with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
+        color: 'gray',
+        message_format:'text',
+        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+        }, function(err){
+                if (err == null) console.log('Successfully notified the room.');
+    });
+    }
+
+    if(buildStatus == 'Started'){
+        hipchatter.notify(buildProjectName, 
+        {
+        message: 'Build Started with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
+        color: 'yellow',
+        message_format:'text',
+        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+        }, function(err){
+                if (err == null) console.log('Successfully notified the room.');
+    });
+    }
+
     if(buildStatus == 'success'){
-        hipchatter.notify('VMA', 
+        hipchatter.notify(buildProjectName, 
         {
         message: 'Build Success with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
         color: 'green',
@@ -90,8 +124,10 @@ function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard
         }, function(err){
                 if (err == null) console.log('Successfully notified the room.');
     });
-    }else{
-        hipchatter.notify('VMA', 
+    }
+
+    if(buildStatus == "Failure"){
+        hipchatter.notify(buildProjectName, 
         {
         message: 'Build FAILED with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
         color: 'red',
