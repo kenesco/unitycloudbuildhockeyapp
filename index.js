@@ -80,14 +80,22 @@ app.post('/build', jsonParser, function (req, res) {
 });
 
 function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard_url, buildStatus,summeryURL){
-    if(buildProjectName == "VMA")
+    var token = ""
+
+    if(buildProjectName == "VMA"){
         buildProjectName = "VMA";
+        token = "MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN";
+    }
 
-    if(buildProjectName == "eTron")
+    if(buildProjectName == "eTron"){
         buildProjectName = "eTron-Client";
+        token = "Vi5Q9hDdVTFMMfwPQHFAT47SKOCO0vjFZacGN2cj";
+    }
 
-    if(buildNumber == "Frresh")
+    if(buildNumber == "Frresh"){
         buildProjectName = "Frresh";
+        token = "kbOk2u0cMKDjec4vOCVlQQs03xj0FB1XyDCANtDk";
+    }
 
     
     if(buildStatus == 'Queued'){
@@ -96,7 +104,7 @@ function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard
         message: 'Build Queued with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
         color: 'gray',
         message_format:'text',
-        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+        token: token
         }, function(err){
                 if (err == null) console.log('Successfully notified the room.');
     });
@@ -108,7 +116,7 @@ function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard
         message: 'Build Started with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
         color: 'yellow',
         message_format:'text',
-        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+        token: token
         }, function(err){
                 if (err == null) console.log('Successfully notified the room.');
     });
@@ -120,7 +128,7 @@ function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard
         message: 'Build Success with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
         color: 'green',
         message_format:'text',
-        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+        token: token
         }, function(err){
                 if (err == null) console.log('Successfully notified the room.');
     });
