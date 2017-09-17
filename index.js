@@ -67,10 +67,10 @@ app.post('/build', jsonParser, function (req, res) {
             message: "Process begun for project '" + req.body.projectName + "' platform '" + req.body.buildTargetName + "'."
         });
     }
-if(req.body.links.buildStatus == 'success'){
+if(req.body.buildStatus == 'success'){
     hipchatter.notify('VMA', 
     {
-       message: 'Build Success with ' + req.body.links.buildTargetName + ' on build number ' + req.body.links.buildNumber,
+       message: 'Build Success with ' + req.body.buildTargetName + ' on build number ' + req.body.buildNumber,
        color: 'green',
        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
        }, function(err){
@@ -79,7 +79,7 @@ if(req.body.links.buildStatus == 'success'){
 }else{
     hipchatter.notify('VMA', 
     {
-       message: 'Build Failed with ' + req.body.links.buildTargetName + ' on build number ' + req.body.links.buildNumber,
+       message: 'Build Failed with ' + req.body.buildTargetName + ' on build number ' + req.body.buildNumber,
        color: 'red',
        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
        }, function(err){
