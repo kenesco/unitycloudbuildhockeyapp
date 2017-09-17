@@ -76,7 +76,11 @@ app.post('/build', jsonParser, function (req, res) {
    
    noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboardURL, buildStatus, summeryURL);
     // 2. Grab binary URL from Unity Cloud API
-    getBuildDetails( buildAPIURL );
+
+    if(buildStatus == "success"){
+        getBuildDetails( buildAPIURL );        
+    }
+
 });
 
 function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard_url, buildStatus,summeryURL){
@@ -110,7 +114,7 @@ function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard
     });
     }
 
-    if(buildStatus == 'Started'){
+    if(buildStatus == 'started'){
         hipchatter.notify(buildProjectName, 
         {
         message: 'Build Started with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
@@ -134,7 +138,7 @@ function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard
     });
     }
 
-    if(buildStatus == "Failure"){
+    if(buildStatus == "failure"){
         hipchatter.notify(buildProjectName, 
         {
         message: 'Build FAILED with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
@@ -163,16 +167,12 @@ function getBuildDetails( buildAPIURL ){
 
             var parsed = url.parse( data.links.download_primary.href );
 
-            if(parsed){
-                var filename = path.basename( parsed.pathname );
-                
-                            console.log("1. getBuildDetails: finished");
-                
-                            // 3. Download binary.
-                            downloadBinary( data.links.download_primary.href, filename );
-            }
+            var filename = path.basename( parsed.pathname );
 
-            
+            console.log("1. getBuildDetails: finished");
+
+            // 3. Download binary.
+            downloadBinary( data.links.download_primary.href, filename );
 
         },
         error: function(error){
