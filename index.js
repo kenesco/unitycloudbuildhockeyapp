@@ -67,25 +67,25 @@ app.post('/build', jsonParser, function (req, res) {
             message: "Process begun for project '" + req.body.projectName + "' platform '" + req.body.buildTargetName + "'."
         });
     }
-if(req.body.buildStatus == 'success'){
-    hipchatter.notify('VMA', 
-    {
-       message: 'Build Success with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ' ]',
-       color: 'green',
-       token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
-       }, function(err){
-               if (err == null) console.log('Successfully notified the room.');
-   });
-}else{
-    hipchatter.notify('VMA', 
-    {
-       message: 'Build Failed with [' + req.body.buildTargetName + ' ] on build number [' + req.body.buildNumber + ' ]',
-       color: 'red',
-       token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
-       }, function(err){
-               if (err == null) console.log('Successfully notified the room.');
-   });
-}
+    if(req.body.buildStatus == 'success'){
+        hipchatter.notify('VMA', 
+        {
+        message: 'Build Success with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ' ]. Check this for detail : ' + req.body.links.api_self.href,
+        color: 'green',
+        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+        }, function(err){
+                if (err == null) console.log('Successfully notified the room.');
+    });
+    }else{
+        hipchatter.notify('VMA', 
+        {
+        message: 'Build Failed with [' + req.body.buildTargetName + ' ] on build number [' + req.body.buildNumber + ' ]',
+        color: 'red',
+        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+        }, function(err){
+                if (err == null) console.log('Successfully notified the room.');
+    });
+    }
    
     // 2. Grab binary URL from Unity Cloud API
     getBuildDetails( buildAPIURL );
