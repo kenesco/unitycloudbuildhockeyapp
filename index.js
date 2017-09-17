@@ -24,7 +24,7 @@ var path = require('path'),
     _ = require('lodash'),
     url = require("url"),
     path = require("path");
-var Hipchatter = require('hipchatter');
+var Hipchatter = require("hipchatter");
 var hipchatter = new Hipchatter("GCS5CM4uz5UPRBR1l6PdFiLJGdaI61knla2n8xzC" , "https://api.hipchat.com/v2/");
 
 // Run Server
