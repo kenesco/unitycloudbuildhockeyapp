@@ -67,15 +67,26 @@ app.post('/build', jsonParser, function (req, res) {
             message: "Process begun for project '" + req.body.projectName + "' platform '" + req.body.buildTargetName + "'."
         });
     }
-
+if(req.body.links.buildStatus == 'success'){
     hipchatter.notify('VMA', 
-     {
-        message: 'Build Success',
-        color: 'green',
-        token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
-        }, function(err){
-                if (err == null) console.log('Successfully notified the room.');
-    });
+    {
+       message: 'Build Success with ' + req.body.links.buildTargetName + ' on build number ' + req.body.links.buildNumber,
+       color: 'green',
+       token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+       }, function(err){
+               if (err == null) console.log('Successfully notified the room.');
+   });
+}else{
+    hipchatter.notify('VMA', 
+    {
+       message: 'Build Failed with ' + req.body.links.buildTargetName + ' on build number ' + req.body.links.buildNumber,
+       color: 'red',
+       token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
+       }, function(err){
+               if (err == null) console.log('Successfully notified the room.');
+   });
+}
+   
     // 2. Grab binary URL from Unity Cloud API
     getBuildDetails( buildAPIURL );
 });
