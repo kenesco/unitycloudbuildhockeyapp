@@ -70,8 +70,9 @@ app.post('/build', jsonParser, function (req, res) {
     if(req.body.buildStatus == 'success'){
         hipchatter.notify('VMA', 
         {
-        message: 'Build Success with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ' ]. Check this for detail : ' + req.body.links.dashboard_url.href + req.body.links.dashboard_summary.href,
+        message: 'Build Success with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ']. Check this for detail : ' + req.body.links.dashboard_url.href + req.body.links.dashboard_summary.href,
         color: 'green',
+        message_format:'text',
         token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
         }, function(err){
                 if (err == null) console.log('Successfully notified the room.');
@@ -79,8 +80,9 @@ app.post('/build', jsonParser, function (req, res) {
     }else{
         hipchatter.notify('VMA', 
         {
-        message: 'Build FAILED with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ' ]. Check this for detail : ' + req.body.links.dashboard_url.href + req.body.links.dashboard_summary.href,
+        message: 'Build FAILED with [' + req.body.buildTargetName + '] on build number [' + req.body.buildNumber + ']. Check this for detail : ' + req.body.links.dashboard_url.href + req.body.links.dashboard_summary.href,
         color: 'red',
+        message_format:'text',
         token: 'MQAcJJm73JyPRqJ2kk4vUjoktGS9XyAofffYdDWN'
         }, function(err){
                 if (err == null) console.log('Successfully notified the room.');
