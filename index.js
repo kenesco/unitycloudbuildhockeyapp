@@ -118,7 +118,7 @@ function noticeHipchat(buildProjectName, buildTargetName, buildNumber, dashboard
         hipchatter.notify(buildProjectName, 
         {
         message: 'Build Started with [' + buildTargetName + '] on build number [' + buildNumber + ']. Check this for detail : ' + dashboard_url + summeryURL,
-        color: 'yellow',
+        color: 'gray',
         message_format:'text',
         token: token
         }, function(err){
